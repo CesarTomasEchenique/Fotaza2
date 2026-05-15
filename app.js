@@ -8,15 +8,12 @@ const path = require("path");
 app.get('/usuarios', async (req, res) => {
 
     try {
-
         const resultado = await base.query('SELECT NOW()');
-
         res.json(resultado.rows);
 
     } catch(error) {
 
         console.log(error);
-
         res.status(500).send('Error BD');
     }
 });
