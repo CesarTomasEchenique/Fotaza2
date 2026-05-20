@@ -1,9 +1,27 @@
-const express= require ("express");
-const base = require ("./database");
+import dotenv from 'dotenv';
+dotenv.config();
+import './models/user.js';
+import sequelize from './models/config.js';
+import express from 'express';
+import path from 'path';
 
-const app= express();
-const port =3000;
-const path = require("path");
+
+//CONSTANTES
+const PORT = process.env.port;
+const app = express();
+const port = 3000;
+
+
+//MIDDLEWARES
+app.use(express.static('public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//MOTOR DE PLANTILLAS
+
+
+
+//RUTAS
 
 app.get('/usuarios', async (req, res) => {
 
@@ -11,25 +29,38 @@ app.get('/usuarios', async (req, res) => {
         const resultado = await base.query('SELECT NOW()');
         res.json(resultado.rows);
 
-    } catch(error) {
+    } catch (error) {
 
         console.log(error);
         res.status(500).send('Error BD');
     }
 });
 
-app.use(express.urlencoded());
-app.use(express.static("public"));
 
-app.get("/",(req,res)=>{
+
+app.get("/", (req, res) => {
     res.status(200).send("Bienvenido al servidor 3000")
 })
 
-app.get("/fotazahome", (req,res)=>{
-    res.sendFile(path.join(__dirname,"public", "FotazaIndex.html"));
+app.get("/fotazahome", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "FotazaIndex.html"));
 })
 
+//CONEXION A BD
+sequelize.sync()
+    .then(() => {
+        //SERVIDOR
 
-app.listen(port,()=>{
-    console.log(`servidor corriendo en : http://localhost:${port}`);
-})
+        app.listen(port, (err) => {
+            if (err) {
+                console.error('error al iniciar el servidor: ', err);
+                return;
+            }
+            console.log(`servidor corriendo en : http://localhost:${port}`);
+        })
+    })
+    .catch((err) => {
+        console.error('error al sincronizar base de datos: ', err)
+    });
+
+
