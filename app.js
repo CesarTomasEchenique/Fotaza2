@@ -1,9 +1,11 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import './models/user.js';
+import './models/index.js';
 import sequelize from './models/config.js';
 import express from 'express';
 import path from 'path';
+
 
 
 //CONSTANTES
@@ -18,7 +20,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //MOTOR DE PLANTILLAS
-
+app.set('views','./views');
+app.set('view engine', 'pug');
 
 
 //RUTAS
@@ -43,7 +46,9 @@ app.get("/", (req, res) => {
 })
 
 app.get("/fotazahome", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "FotazaIndex.html"));
+    res.render("index");
+   
+  
 })
 
 //CONEXION A BD

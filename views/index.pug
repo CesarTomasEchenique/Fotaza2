@@ -1,0 +1,47 @@
+doctype html
+html(lang="es")
+  head
+    title FOTAZA 2
+    link(rel="stylesheet", href="/stile.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+  body
+    header.header
+      .logo FOTAZA2
+    
+    main.container
+      h1 Inicio
+      
+      .carousel-wrapper
+        button#prevBtn.nav-btn: i.fa-solid.fa-chevron-left
+        .carousel-container
+          .carousel-slide
+            img(src="/imagenes/messi.jpg", alt="Foto 1")
+            img(src="/imagenes/memegato.jpg", alt="Foto 2")
+            img(src="/imagenes/pelota.jpg", alt="Foto 3")
+            img(src="/imagenes/mike.jpg", alt="Foto 4")
+        button#nextBtn.nav-btn: i.fa-solid.fa-chevron-right
+
+
+    script.
+      const slide = document.querySelector('.carousel-slide');
+      const images = document.querySelectorAll('.carousel-slide img');
+      const nextBtn = document.getElementById('nextBtn');
+      const prevBtn = document.getElementById('prevBtn');
+      
+
+
+      const size = 600;
+      let counter = 0;
+      nextBtn.addEventListener('click', () => {
+        if (counter >= images.length - 1) return;
+        counter++;
+
+        slide.style.transform = 'translateX(' + (-size * counter) + 'px)';
+      });
+
+
+      prevBtn.addEventListener('click', () => {
+        if (counter <= 0) return;
+        counter--;
+        slide.style.transform = 'translateX(' + (-size * counter) + 'px)';
+      });
