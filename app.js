@@ -25,6 +25,13 @@ app.set('view engine', 'pug');
 
 
 //RUTAS
+app.get('/login', (req,res)=>{
+    res.render("iniciarSesion");
+});
+
+app.get('/registro',(req,res)=>{
+    res.render("registrarse");
+});
 
 app.get('/usuarios', async (req, res) => {
 

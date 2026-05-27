@@ -25,7 +25,7 @@ body {
   text-align: center;
 }
 
-
+/* los botones y el deslizamiento de la imagen*/
 .carousel-wrapper {
   display: flex;
   align-items: center;
@@ -59,7 +59,6 @@ body {
   object-fit: cover;
 }
 
-/* Botones */
 .nav-btn {
   background: white;
   border: none;

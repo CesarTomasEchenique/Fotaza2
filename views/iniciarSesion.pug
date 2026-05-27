@@ -1,0 +1,30 @@
+doctype html
+html(lang="es")
+  head
+    title Iniciar Sesión - FOTAZA 2
+    
+  body
+    header.header
+      .logo FOTAZA2
+      link(rel="stylesheet", href="/stileIniciarSesion.css")
+      a(href='/registro')
+        button.btn-registro registrarse
+    main.todolodemas 
+      
+      
+        
+        h1 Iniciar Sesión
+        
+        //- El formulario apunta a una ruta POST que procesará los datos después
+        form(action="/login" method="POST" class="login-form")
+          .form-group
+            label(for="Usuario") nombre de usuario
+            input(type="user" id="user" name="user" placeholder="admin" required)
+          
+          .form-group
+            label(for="password") contraseña
+            input(type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required)
+          
+          button(type="submit" class="btn-submit") Entrar
+        
+        a(href="/fotazahome" class="back-link") Volver al inicio
