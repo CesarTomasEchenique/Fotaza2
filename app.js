@@ -5,6 +5,7 @@ import './models/index.js';
 import sequelize from './models/config.js';
 import express from 'express';
 import path from 'path';
+import userRouter from './router/userRouter.js';
 
 
 
@@ -18,6 +19,7 @@ const port = 3000;
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(userRouter);
 
 //MOTOR DE PLANTILLAS
 app.set('views','./views');
@@ -59,7 +61,7 @@ app.get("/fotazahome", (req, res) => {
 })
 
 //CONEXION A BD
-sequelize.sync()
+sequelize.sync({ alter: true })
     .then(() => {
         //SERVIDOR
 

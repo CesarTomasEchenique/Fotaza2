@@ -11,15 +11,16 @@ html(lang="es")
         button.btn-registro registrarse
     main.todolodemas 
       
-      
         
         h1 Iniciar Sesión
+        //- Si el controlador manda un error, se muestra acá
+        if error
+          p.error-message(style="color: red; margin-bottom: 15px;") #{error}
         
-        //- El formulario apunta a una ruta POST que procesará los datos después
         form(action="/login" method="POST" class="login-form")
           .form-group
-            label(for="Usuario") nombre de usuario
-            input(type="user" id="user" name="user" placeholder="admin" required)
+            label(for="email") email usuario
+            input(type="email" id="email" name="email" placeholder="admin@admin.com" required)
           
           .form-group
             label(for="password") contraseña
