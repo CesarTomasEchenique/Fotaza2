@@ -70,3 +70,10 @@ body {
   font-size: 18px;
   
 }
+.llevaraizquierda  a{
+
+  margin-right: 10px;
+}
+.llevaraizquierda {
+  margin-left: auto;
+}

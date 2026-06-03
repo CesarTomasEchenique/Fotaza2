@@ -2,14 +2,27 @@ doctype html
 html(lang="es")
   head
     title Mi Perfil - FOTAZA 2
-    link(rel="stylesheet", href="/stile.css")
+    link(rel="stylesheet", href="/stile.css") 
   body
     header.header
       .logo FOTAZA2
-      a(href="/login")
-        button.btn-login Cerrar Sesión
-    
+      a(href="/fotazahome")
+        button.btn-login Ir al Inicio
+
     main.container
-      h1 ¡Bienvenido, #{nombre}!
-      p Lograste hacer todo el recorrido desde la Base de Datos hasta la Vista usando MVC.
-      img(src="/imagenes/meme.jpg", width=250)
+      h1 ¡Bienvenido a tu perfil, #{usuario.firstName}!
+
+      .perfil-card
+        h3 Mis Datos Personales
+        p 
+          strong Nombre completo: 
+          span #{usuario.firstName} #{usuario.lastName}
+        p 
+          strong Correo Electrónico: 
+          span #{usuario.email}
+        p 
+          strong Teléfono: 
+          span #{usuario.phone ? usuario.phone : 'No registrado'}
+        p 
+          strong Cumpleaños: 
+          span #{usuario.cumpleanos ? usuario.cumpleanos : 'No registrado'}

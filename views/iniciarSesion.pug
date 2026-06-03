@@ -7,8 +7,9 @@ html(lang="es")
     header.header
       .logo FOTAZA2
       link(rel="stylesheet", href="/stileIniciarSesion.css")
+      .llevaraizquierda
       a(href='/registro')
-        button.btn-registro registrarse
+        button.btn-registro ir a Registrarse
     main.todolodemas 
       
         
@@ -18,14 +19,15 @@ html(lang="es")
           p.error-message(style="color: red; margin-bottom: 15px;") #{error}
         
         form(action="/login" method="POST" class="login-form")
-          .form-group
+          .paracss
             label(for="email") email usuario
             input(type="email" id="email" name="email" placeholder="admin@admin.com" required)
           
-          .form-group
+          .paracss
             label(for="password") contraseña
             input(type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required)
           
-          button(type="submit" class="btn-submit") Entrar
+          .paracss
+            button(type="submit" class="btn-submit") Entrar
         
         a(href="/fotazahome" class="back-link") Volver al inicio

@@ -12,7 +12,7 @@ export const procesarLogin = async(req,res)=>{
             return res.render('iniciarSesion',{error:"el emeil no se encontro"});
         }
         if(usuarioEncontrado.password === password){
-            return res.render('perfil',{nombre: usuarioEncontrado.firtsName});
+           return res.render('perfil', {usuario: usuarioEncontrado});
         }else{
             return res.render('iniciarSesion',{error:"la contraseña es incorrecta"});
         }
