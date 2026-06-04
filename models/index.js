@@ -1,10 +1,10 @@
 import User from './user.js';
-import Publicacion from './publicacion.js';
-import Comentario from './comentario.js';
-import Favorito from './favorito.js';
-import Notificacion from './notificacion.js';
-import Denuncia from './denuncia.js';
-import MensajePrivado from './mensajePrivado.js';
+import Publicacion from './Publicacion.js';
+import Comentario from './Comentario.js';
+import Favorito from './Favorito.js';
+import Notificacion from './Notificacion.js';
+import Denuncia from './Denuncia.js';
+import MensajePrivado from './MensajePrivado.js';
 
 // 1. Relaciones de Publicación (Un Usuario tiene muchas, una Publicación pertenece a un Usuario)
 User.hasMany(Publicacion, { foreignKey: 'idUser' });

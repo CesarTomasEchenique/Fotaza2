@@ -6,23 +6,49 @@ html(lang="es")
   body
     header.header
       .logo FOTAZA2
+      .llevaraizquierda
       a(href="/fotazahome")
         button.btn-login Ir al Inicio
 
     main.container
       h1 ¡Bienvenido a tu perfil, #{usuario.firstName}!
 
-      .perfil-card
-        h3 Mis Datos Personales
-        p 
-          strong Nombre completo: 
-          span #{usuario.firstName} #{usuario.lastName}
-        p 
-          strong Correo Electrónico: 
-          span #{usuario.email}
-        p 
-          strong Teléfono: 
-          span #{usuario.phone ? usuario.phone : 'No registrado'}
-        p 
-          strong Cumpleaños: 
-          span #{usuario.cumpleanos ? usuario.cumpleanos : 'No registrado'}
+            
+      create-post
+        h2 Publicar una nueva foto      
+            
+      .form-publicar
+
+
+        form(action="/publicar", method="POST", enctype="multipart/form-data")
+          .paracss
+            label(for= "titulo") titulo de la foto 
+            input(type="text", id="titulo", name="titulo", placeholder="Escribe un titulo", required)
+          .paracss
+            input(type="hidden", name="usuarioId", value=usuario.id)
+
+          .paracss
+            label(for="file-upload" class="custom-file-upload") 
+            input(id="file-upload", type="file", name="foto", accept="image/*", required)
+          .paracss
+            label(for= "descripcion") descripción de la foto 
+            input(type="text", id="descripcion", name="descripcion", placeholder="Escribe una descripción")
+          .paracss
+            label(for ="copyright") con copyright 
+            select(id="copyright", name="copyright")
+              option(value="true") Sí
+              option(value="false") No
+
+          .paracss
+          button(type="submit" class="btn-publicar") Publicar
+
+      //- Contenedor del Feed de fotos abajo
+      .feed-container
+        h3 Mis Publicaciones
+        .grid-publicaciones
+          if publicaciones && publicaciones.length > 0
+            each pub in publicaciones
+              .tarjeta-publicacion
+                img(src=`/uploads/${pub.contenido}`, alt="Foto publicada")
+          else
+            p No hay publicaciones para mostrar todavía.
