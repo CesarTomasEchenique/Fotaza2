@@ -7,8 +7,6 @@ import express from 'express';
 import path from 'path';
 import userRouter from './router/userRouter.js';
 
-
-
 //CONSTANTES
 const PORT = process.env.port;
 const app = express();
@@ -30,6 +28,117 @@ app.set('view engine', 'pug');
 app.get('/login', (req,res)=>{
     res.render("iniciarSesion");
 });
+
+app.get('/perfil', (req,res)=>{
+    res.render("perfil");
+});
+app.get('/galeria', async (req,res)=>{
+
+    const publicaciones =
+        await Publicacion.findAll();
+
+    const publicacionesVista = [];
+
+    for(const pub of publicaciones){
+
+        publicacionesVista.push({
+
+            title: pub.title,
+
+            descripcion: pub.descripcion,
+
+            src:
+                `data:image/jpeg;base64,${
+                    pub.foto.toString('base64')
+                }`
+
+        });
+
+    }
+
+    res.render('galeria',{
+
+        usuario:{
+            firstName:'Tomas'
+        },
+
+        publicaciones: publicacionesVista
+
+    });
+
+});
+app.post('/publicar', async (req,res)=>{
+
+    try{
+
+        const base64 = req.body.imagenBase64;
+
+        const partes = base64.split(',');
+
+        const bufferImagen =
+            Buffer.from(partes[1], 'base64');
+
+        await Publicacion.create({
+
+            title: req.body.titulo,
+
+            foto: bufferImagen,
+
+            descripcion: req.body.descripcion,
+
+            userId: req.body.usuarioId,
+            
+            publicaCopyright: req.body.copyright === "true"
+
+        });
+
+        res.redirect('/galeria');
+
+    }catch(error){
+
+        console.log(error);
+
+        res.send('Error al publicar');
+
+    }
+
+});
+
+/*app.get('/galeria', async (req,res)=>{
+    const publicaciones = await Publicacion.findAll();
+    const arregloimagenes = [];
+    for (const imagen of publicaciones){
+        const imgbase64 = imagen.foto.toString('base64');
+        const sufix = `data:image/${imagen.metadata}base64;`
+        arrregloimagenes.push({
+            name: imagen.title,
+            src: sufix + imgbase64
+        });
+    }
+    console.log("imagenes: ", arregloimagenes.length);
+    res.render('galeria', {imagenes: arregloimagenes});
+
+});
+
+app.post('/galeria', async(req,res)=>{
+    const imagenes = req.body.imgs;
+    for(const img of imagenes){
+        const textbase64 = img.src;
+
+        const arreglobase64 = textbase64.split(',');
+        const imagenbuffer= Buffer.from(arreglobase64[1], 'base64');
+        await Publicacion.create({
+            title: img.name,
+            foto: imagenbuffer,
+            descripcion: 'Descripción de la imagen',
+            userId: 1, 
+            metadata: arreglobase64[0] 
+        });
+
+    }
+
+    res.render('galeria',{imagen: body.imgs});
+});*/
 
 app.get('/registro',(req,res)=>{
     res.render("registrarse");

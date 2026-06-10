@@ -26,7 +26,7 @@ html(lang="es")
             input(type="text", id="titulo", name="titulo", placeholder="Escribe un titulo", required)
           .paracss
             input(type="hidden", name="usuarioId", value=usuario.id)
-
+            
           .paracss
             label(for="file-upload" class="custom-file-upload") 
             input(id="file-upload", type="file", name="foto", accept="image/*", required)
@@ -41,14 +41,25 @@ html(lang="es")
 
           .paracss
           button(type="submit" class="btn-publicar") Publicar
+      .paracss
+      a(href="/galeria")
+        button Ver mi Galeria
 
-      //- Contenedor del Feed de fotos abajo
-      .feed-container
-        h3 Mis Publicaciones
-        .grid-publicaciones
-          if publicaciones && publicaciones.length > 0
-            each pub in publicaciones
-              .tarjeta-publicacion
-                img(src=`/uploads/${pub.contenido}`, alt="Foto publicada")
-          else
-            p No hay publicaciones para mostrar todavía.
+        script.
+          const inputFoto = document.getElementById('foto');
+          const imagenBase64 = document.getElementById('imagenBase64');
+
+          inputFoto.addEventListener('change', function(){
+
+              const archivo = this.files[0];
+
+              if(!archivo) return;
+
+              const reader = new FileReader();
+
+              reader.onload = function(e){
+                  imagenBase64.value = e.target.result;
+              };
+
+              reader.readAsDataURL(archivo);
+          });

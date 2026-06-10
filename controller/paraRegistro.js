@@ -5,28 +5,29 @@ export const mostrarRegistro = (req,res)=>{
 };
 
 export const procesarRegistro = async(req,res)=>{
-    try{
-        const { firstName, firstname, lastName, lastname, email, password, cumpleanos, phone } = req.body;
-        
-        const emailexiste = await user.findOne({where:{email}});
-        if(emailexiste){
-            return res.render('registrarse',{error:"el email ya esta registrado"});
-        }
-        
-        await user.create({
-            firstName: firstName || firstname, 
-            lastName: lastName || lastname,   
-            email: email,
-            password: password,
-            cumpleanos: cumpleanos || null,
-            phone: (phone === "" || !phone) ? 0 : phone
-        })
-        res.redirect('/login');
-
+   const { firstName, lastName, email, password, cumpleanos, phone } = req.body;
+    const name = firstName.trim();
+    const lastname = lastName.trim();
+    const emaillimpio = email.trim();
+    const passwordlimpio= password.trim();
+    const cumpleanoslimpio = cumpleanos.trim();
+    const phonelimpio = phone.trim();
+    if (!name || !lastname || !emaillimpio || !passwordlimpio || !cumpleanoslimpio || !phonelimpio) {
+        return res.render('registrarse', { error: "Todos los campos son obligatorios" });
     }
-    catch (error) {
+    try {
+        const user = await User.create({
+            firstName: name,
+            lastName: lastname,
+            email: emaillimpio,
+            password: passwordlimpio,
+            cumpleanos: cumpleanoslimpio,
+            phone: phonelimpio
+        });
+        res.redirect('/login');
+    } catch (error) {
         console.error(error);
-        res.status(500).send('error interno al registrar el usuario');
-
+        res.redirect('/registrarse');
+        return;
     }
 };

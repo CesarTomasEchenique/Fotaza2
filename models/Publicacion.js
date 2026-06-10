@@ -14,6 +14,10 @@ Publicacion.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
+  foto: {
+    type: DataTypes.BLOB,
+    allowNull: false,
+  },
   descripcion: {
     type: DataTypes.STRING,
     allowNull: false,

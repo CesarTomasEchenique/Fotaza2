@@ -1,0 +1,41 @@
+doctype html
+html(lang="es")
+  head
+    title Mi Perfil - FOTAZA 2
+    link(rel="stylesheet", href="/stile.css") 
+  body
+    header.header
+      .logo FOTAZA2
+      .llevaraizquierda
+      a(href="/fotazahome")
+        button.btn-login Ir al Inicio
+
+    main.container
+      h1 ¡Bienvenido a tu Galeria, #{usuario.firstName}!
+
+      if publicaciones.length > 0
+    each pub in publicaciones
+        .tarjeta-publicacion
+
+            h3= pub.title
+
+            img(
+                src=pub.src
+                width="300"
+            )
+
+            p= pub.descripcion
+else
+    p No hay publicaciones para mostrar todavía.            
+            
+
+     //- Contenedor del Feed de fotos abajo
+      //.feed-container
+      //  h3 Mis Publicaciones
+      //  .grid-publicaciones
+      //    if publicaciones && publicaciones.length > 0
+      //      each pub in publicaciones
+      //        .tarjeta-publicacion
+      //          img(src=`/uploads/${pub.contenido}`, alt="Foto publicada")
+      //    else
+      //      p No hay publicaciones para mostrar todavía. 
