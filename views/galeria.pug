@@ -2,7 +2,7 @@ doctype html
 html(lang="es")
   head
     title Mi Perfil - FOTAZA 2
-    link(rel="stylesheet", href="/stile.css") 
+    link(rel="stylesheet", href="/stileGaleria.css") 
   body
     header.header
       .logo FOTAZA2
@@ -10,32 +10,19 @@ html(lang="es")
       a(href="/fotazahome")
         button.btn-login Ir al Inicio
 
-    main.container
-      h1 ¡Bienvenido a tu Galeria, #{usuario.firstName}!
+          
+      
+        //Contenedor del Feed de fotos abajo
+    .feed-container
 
-      if publicaciones.length > 0
-    each pub in publicaciones
-        .tarjeta-publicacion
+      if imagenes.length === 0
+        p No hay publicaciones para mostrar.
 
-            h3= pub.title
+      else
+        each imagen in imagenes
 
-            img(
-                src=pub.src
-                width="300"
-            )
+          h3= imagen.title
 
-            p= pub.descripcion
-else
-    p No hay publicaciones para mostrar todavía.            
-            
+          img(src=imagen.src width="300")
 
-     //- Contenedor del Feed de fotos abajo
-      //.feed-container
-      //  h3 Mis Publicaciones
-      //  .grid-publicaciones
-      //    if publicaciones && publicaciones.length > 0
-      //      each pub in publicaciones
-      //        .tarjeta-publicacion
-      //          img(src=`/uploads/${pub.contenido}`, alt="Foto publicada")
-      //    else
-      //      p No hay publicaciones para mostrar todavía. 
+          p= imagen.description

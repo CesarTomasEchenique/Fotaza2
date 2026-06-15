@@ -31,7 +31,15 @@ Publicacion.init({
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false,
-  }
+  },
+  metadata:{
+    type: DataTypes.STRING,
+    allowNull:false
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+}
 }, {
   sequelize,
   modelName: 'Publicacion',

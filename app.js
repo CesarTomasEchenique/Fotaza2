@@ -6,6 +6,7 @@ import sequelize from './models/config.js';
 import express from 'express';
 import path from 'path';
 import userRouter from './router/userRouter.js';
+import Publicacion from './models/Publicacion.js';
 
 //CONSTANTES
 const PORT = process.env.port;
@@ -15,15 +16,16 @@ const port = 3000;
 
 //MIDDLEWARES
 app.use(express.static('public'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(userRouter);
 
 //MOTOR DE PLANTILLAS
 app.set('views','./views');
 app.set('view engine', 'pug');
 
-
+//lets
+let imagenSubida =null;
 //RUTAS
 app.get('/login', (req,res)=>{
     res.render("iniciarSesion");
@@ -32,77 +34,30 @@ app.get('/login', (req,res)=>{
 app.get('/perfil', (req,res)=>{
     res.render("perfil");
 });
-app.get('/galeria', async (req,res)=>{
 
+
+app.get("/galeria", async (req,res)=>{
     const publicaciones =
         await Publicacion.findAll();
-
-    const publicacionesVista = [];
-
-    for(const pub of publicaciones){
-
-        publicacionesVista.push({
-
-            title: pub.title,
-
-            descripcion: pub.descripcion,
-
-            src:
-                `data:image/jpeg;base64,${
-                    pub.foto.toString('base64')
-                }`
-
+    const arregloImagenes = [];
+    for(const imagen of publicaciones){
+        const imagen64 =
+            imagen.foto.toString("base64");
+        const src =
+            `${imagen.metadata},${imagen64}`;
+        arregloImagenes.push({
+            title: imagen.title,
+            description: imagen.description,
+            src
         });
 
     }
-
-    res.render('galeria',{
-
-        usuario:{
-            firstName:'Tomas'
-        },
-
-        publicaciones: publicacionesVista
-
+    console.log(req.body);
+    res.render("galeria",{
+        imagenes: arregloImagenes
     });
-
 });
-app.post('/publicar', async (req,res)=>{
 
-    try{
-
-        const base64 = req.body.imagenBase64;
-
-        const partes = base64.split(',');
-
-        const bufferImagen =
-            Buffer.from(partes[1], 'base64');
-
-        await Publicacion.create({
-
-            title: req.body.titulo,
-
-            foto: bufferImagen,
-
-            descripcion: req.body.descripcion,
-
-            userId: req.body.usuarioId,
-            
-            publicaCopyright: req.body.copyright === "true"
-
-        });
-
-        res.redirect('/galeria');
-
-    }catch(error){
-
-        console.log(error);
-
-        res.send('Error al publicar');
-
-    }
-
-});
 
 /*app.get('/galeria', async (req,res)=>{
     const publicaciones = await Publicacion.findAll();
@@ -118,9 +73,9 @@ app.post('/publicar', async (req,res)=>{
     console.log("imagenes: ", arregloimagenes.length);
     res.render('galeria', {imagenes: arregloimagenes});
 
-});
+});*/
 
-app.post('/galeria', async(req,res)=>{
+/*app.post('/galeria', async(req,res)=>{
     const imagenes = req.body.imgs;
     for(const img of imagenes){
         const textbase64 = img.src;
@@ -139,6 +94,34 @@ app.post('/galeria', async(req,res)=>{
 
     res.render('galeria',{imagen: body.imgs});
 });*/
+
+
+app.post("/perfil", async (req,res)=>{
+    try{
+        const base64 = req.body.imagenBase64;
+        const partes = base64.split(",");
+        const bufferImagen =
+            Buffer.from(partes[1],"base64");
+        console.log(req.body);    
+        await Publicacion.create({
+            title: req.body.titulo,
+            foto: bufferImagen,
+            descripcion: req.body.descripcion,
+            publicaCopyright: req.body.copyright === 'true',
+            metadata: partes[0],
+            userId: req.body.usuarioId
+        });
+        
+        res.redirect('/galeria');
+    }catch(error){
+        console.log(error);
+        res.status(500).json({ok:false});
+    }
+});
+
+
+
+
 
 app.get('/registro',(req,res)=>{
     res.render("registrarse");

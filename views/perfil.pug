@@ -18,18 +18,21 @@ html(lang="es")
         h2 Publicar una nueva foto      
             
       .form-publicar
+        
 
+        form(action="/perfil", method="POST")
 
-        form(action="/publicar", method="POST", enctype="multipart/form-data")
+          input(type="hidden", id="imagenBase64", name="imagenBase64")
+
+          input(type="hidden", name="usuarioId", value=usuario.id)
           .paracss
             label(for= "titulo") titulo de la foto 
             input(type="text", id="titulo", name="titulo", placeholder="Escribe un titulo", required)
-          .paracss
-            input(type="hidden", name="usuarioId", value=usuario.id)
+            
             
           .paracss
-            label(for="file-upload" class="custom-file-upload") 
-            input(id="file-upload", type="file", name="foto", accept="image/*", required)
+            label(for="foto" class="custom-file-upload") 
+            input(id="foto", type="file", name="foto", accept="image/*",multiple, required)
           .paracss
             label(for= "descripcion") descripción de la foto 
             input(type="text", id="descripcion", name="descripcion", placeholder="Escribe una descripción")
@@ -60,6 +63,6 @@ html(lang="es")
               reader.onload = function(e){
                   imagenBase64.value = e.target.result;
               };
-
+              console.log("archivo seleccionado");
               reader.readAsDataURL(archivo);
           });
