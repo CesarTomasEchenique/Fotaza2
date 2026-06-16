@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import { genSalt, hash } from 'bcrypt';
 
 export class user extends Model {
-    async validarContraseña(password) {
+    async validarContrasena(password) {
       return await bcrypt.compare(password, this.password);
    }
  }

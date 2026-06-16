@@ -32,7 +32,9 @@ app.get('/login', (req,res)=>{
 });
 
 app.get('/perfil', (req,res)=>{
-    res.render("perfil");
+    res.render('perfil', {
+    usuario: user
+});
 });
 
 
@@ -58,42 +60,6 @@ app.get("/galeria", async (req,res)=>{
     });
 });
 
-
-/*app.get('/galeria', async (req,res)=>{
-    const publicaciones = await Publicacion.findAll();
-    const arregloimagenes = [];
-    for (const imagen of publicaciones){
-        const imgbase64 = imagen.foto.toString('base64');
-        const sufix = `data:image/${imagen.metadata}base64;`
-        arrregloimagenes.push({
-            name: imagen.title,
-            src: sufix + imgbase64
-        });
-    }
-    console.log("imagenes: ", arregloimagenes.length);
-    res.render('galeria', {imagenes: arregloimagenes});
-
-});*/
-
-/*app.post('/galeria', async(req,res)=>{
-    const imagenes = req.body.imgs;
-    for(const img of imagenes){
-        const textbase64 = img.src;
-
-        const arreglobase64 = textbase64.split(',');
-        const imagenbuffer= Buffer.from(arreglobase64[1], 'base64');
-        await Publicacion.create({
-            title: img.name,
-            foto: imagenbuffer,
-            descripcion: 'Descripción de la imagen',
-            userId: 1, 
-            metadata: arreglobase64[0] 
-        });
-
-    }
-
-    res.render('galeria',{imagen: body.imgs});
-});*/
 
 
 app.post("/perfil", async (req,res)=>{

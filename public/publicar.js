@@ -26,7 +26,7 @@ form.addEventListener("submit", async (e)=>{
         imagenBase64
     };
 
-    await fetch("/publicar",{
+    await fetch("/perfil",{
         method:"POST",
         headers:{
             "Content-Type":"application/json"

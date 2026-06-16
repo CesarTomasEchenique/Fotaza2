@@ -1,3 +1,4 @@
+include mixin/alert
 doctype html
 html(lang="es")
   head
@@ -17,15 +18,15 @@ html(lang="es")
         //- Si el controlador manda un error, se muestra acá
         if error
           p.error-message(style="color: red; margin-bottom: 15px;") #{error}
-        
+        +alert(alert)
         form(action="/login" method="POST" class="login-form")
           .paracss
             label(for="email") email usuario
-            input(type="email" id="email" name="email" placeholder="admin@admin.com" required)
+            input(type="email" id="email" name="email" placeholder="admin@admin.com" required, value=formValues.email)
           
           .paracss
             label(for="password") contraseña
-            input(type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required)
+            input(type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required, value=formValues.password)
           
           .paracss
             button(type="submit" class="btn-submit") Entrar

@@ -1,3 +1,4 @@
+include mixin/alert
 doctype html
 html(lang="es")
   head
@@ -16,31 +17,31 @@ html(lang="es")
         
         h1 Registrarse en Fotaza 
         
-        
+        +alert(alert)
         form(action="/registro" method="POST" class="login-form")
           .paracss
             label(for="firstName") nombre
-            input(type="text" id="firstName" name="firstName" placeholder="Ingresa tu nombre" required)
+            input(type="text" id="firstName" name="firstName" placeholder="Ingresa tu nombre", value=formValues? formValues.firstName : '')
           
           .paracss 
             label(for="lastName") apellido
-            input(type="text" id="lastName" name="lastName" placeholder="Ingresa tu apellido" required)
+            input(type="text" id="lastName" name="lastName" placeholder="Ingresa tu apellido", value=formValues ? formValues.lastName : '')
 
           .paracss
             label(for="password") contraseña
-            input(type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required)
+            input(type="password" id="password" name="password" placeholder="Ingresa tu contraseña", value=formValues ? formValues.password : '')
 
           .paracss
             label(for="email") email
-            input(type="email" id="email" name="email" placeholder="Ingresa tu email" required)
+            input(type="email" id="email" name="email" placeholder="Ingresa tu email", value=formValues ? formValues.email : '')
 
           .paracss
             label(for="fechaNacimiento") fecha de nacimiento
-            input(type="date" id="fechaNacimiento" name="cumpleanos" required)
+            input(type="date" id="fechaNacimiento" name="cumpleanos" value=formValues ? formValues.cumpleanos : '')
 
           .paracss
             label(for="telefono") teléfono
-            input(type="tel" id="telefono" name="phone" placeholder="Ingresa tu teléfono" required)
+            input(type="tel" id="telefono" name="phone" placeholder="Ingresa tu teléfono", value=formValues ? formValues.phone : '')
 
           .paracss
             button(type="submit" class="btn-submit") Registrarse
