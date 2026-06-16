@@ -22,11 +22,11 @@ html(lang="es")
         form(action="/login" method="POST" class="login-form")
           .paracss
             label(for="email") email usuario
-            input(type="email" id="email" name="email" placeholder="admin@admin.com" required, value=formValues.email)
+            input(type="email" id="email" name="email" placeholder="admin@admin.com" required, value=formValues ? formValues.email : '')
           
           .paracss
             label(for="password") contraseña
-            input(type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required, value=formValues.password)
+            input(type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required, value=formValues ? formValues.password : '')
           
           .paracss
             button(type="submit" class="btn-submit") Entrar
